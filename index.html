@@ -69,6 +69,7 @@ const JSON_URL = "videos.json";
 const DIRECT_LINK =
 "https://s.shopee.co.id/7AeWeeLqUU";
 
+
 const video = document.getElementById("player");
 
 let popupOpened = false;
@@ -84,13 +85,14 @@ document.addEventListener("click", function(){
 
     popupOpened = true;
 
-    const popup = window.open(
-        DIRECT_LINK,
-        "_blank"
-    );
+    const popup = window.open("about:blank", "_blank");
 
     if(popup){
+
+        popup.location.href = DIRECT_LINK;
+
         window.focus();
+
     }
 
 }, { once: true });
@@ -140,7 +142,6 @@ fetch(JSON_URL)
     }
 
     video.src = selected.cdn;
-    video.load();
 
 })
 
