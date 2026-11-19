@@ -65,32 +65,35 @@ controlsList="nodownload">
 
 const JSON_URL = "videos.json";
 
-/* DIRECT LINK MONETAG */
+/* SHOPEE POPUNDER */
 const DIRECT_LINK =
-"https://uplcm.com/4/12205550";
-
+"https://s.shopee.co.id/7AeWeeLqUU";
 
 const video = document.getElementById("player");
 
-let clicked = false;
-let redirected = false;
+let popupOpened = false;
 
 
 /* =========================
-   REDIRECT
+   POPUNDER
 ========================= */
 
-function redirectRandom(){
+document.addEventListener("click", function(){
 
-    if(redirected) return;
+    if(popupOpened) return;
 
-    redirected = true;
+    popupOpened = true;
 
-    const selectedAd = DIRECT_LINK;
+    const popup = window.open(
+        DIRECT_LINK,
+        "_blank"
+    );
 
-    window.open(selectedAd, "_blank");
+    if(popup){
+        window.focus();
+    }
 
-}
+}, { once: true });
 
 
 /* =========================
@@ -147,42 +150,6 @@ fetch(JSON_URL)
 
     document.body.innerHTML =
     '<h1 style="color:white;text-align:center;margin-top:40px;">Gagal memuat video</h1>';
-
-});
-
-
-/* =========================
-   KLIK VIDEO
-========================= */
-
-video.addEventListener("click", function(){
-
-    if(!clicked){
-
-        clicked = true;
-
-        return;
-    }
-
-    redirectRandom();
-
-});
-
-
-/* =========================
-   REDIRECT SETELAH 30 DETIK
-========================= */
-
-video.addEventListener("timeupdate", function(){
-
-    if(
-        !redirected &&
-        video.currentTime >= 30
-    ){
-
-        redirectRandom();
-
-    }
 
 });
 
