@@ -1,0 +1,2 @@
+# slicvdirecdn
+slicvdirecdn@gmail.com
