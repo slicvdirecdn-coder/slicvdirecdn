@@ -124,8 +124,9 @@ fetch(JSON_URL)
 
     const vids = data.videos;
 
-    const selected =
-        vids.find(v => v.id === id);
+    const selected = id
+        ? vids.find(v => v.id === id)
+        : vids[0];
 
     if(!selected){
 
@@ -136,6 +137,7 @@ fetch(JSON_URL)
     }
 
     video.src = selected.cdn;
+    video.load();
 
 })
 
