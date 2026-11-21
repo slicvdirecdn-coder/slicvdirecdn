@@ -25,59 +25,19 @@ body{
     background:#000;
 }
 
-.player-container{
-    position:relative;
-    width:100%;
-    height:100vh;
-    background:#000;
-}
-
 video{
     width:100%;
-    height:100%;
+    height:100vh;
     object-fit:contain;
     background:#000;
 }
 
-#playOverlay{
+#title{
     position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    cursor:pointer;
-    z-index:5;
-}
-
-#playOverlay.hidden{
-    display:none;
-}
-
-.play-button{
-    width:76px;
-    height:76px;
-    border-radius:50%;
-    background:rgba(30,30,30,0.75);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:2px solid rgba(255,255,255,0.85);
-    box-shadow:0 2px 12px rgba(0,0,0,0.4);
-}
-
-.play-button svg{
-    width:34px;
-    height:34px;
-    fill:#fff;
-    margin-left:5px;
-}
-
-#playLabel{
+    top:10px;
+    left:10px;
     color:#fff;
-    font-size:12px;
-    margin-top:10px;
-    text-shadow:0 1px 4px #000;
+    font-size:14px;
 }
 </style>
 
@@ -85,30 +45,15 @@ video{
 
 <body>
 
-<div class="player-container">
-
 <video
 id="player"
+controls
 playsinline
 controlsList="nodownload">
 
 <source src="" type="video/mp4">
 
 </video>
-
-<div id="playOverlay">
-
-    <div class="play-button">
-        <svg viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z"/>
-        </svg>
-    </div>
-
-    <div id="playLabel">Sponsor • klik untuk membuka</div>
-
-</div>
-
-</div>
 
 <script>
 
@@ -122,11 +67,33 @@ const JSON_URL = "videos.json";
 const DIRECT_LINK =
 "https://uplcm.com/4/12205550";
 
+
 const video = document.getElementById("player");
-const overlay = document.getElementById("playOverlay");
-const playLabel = document.getElementById("playLabel");
 
 let popupOpened = false;
+
+
+/* =========================
+   POPUNDER
+========================= */
+
+document.addEventListener("click", function(){
+
+    if(popupOpened) return;
+
+    popupOpened = true;
+
+    const popup = window.open("about:blank", "_blank");
+
+    if(popup){
+
+        popup.location.href = DIRECT_LINK;
+
+        window.focus();
+
+    }
+
+}, { once: true });
 
 
 /* =========================
@@ -173,7 +140,6 @@ fetch(JSON_URL)
     }
 
     video.src = selected.cdn;
-    video.load();
 
 })
 
@@ -183,51 +149,6 @@ fetch(JSON_URL)
 
     document.body.innerHTML =
     '<h1 style="color:white;text-align:center;margin-top:40px;">Gagal memuat video</h1>';
-
-});
-
-
-/* =========================
-   MONETAG & PLAY VIDEO
-========================= */
-
-overlay.addEventListener("click", function(){
-
-    if(!popupOpened){
-
-        popupOpened = true;
-
-        const popup = window.open(DIRECT_LINK, "_blank");
-
-        playLabel.textContent = "Putar Video";
-
-        return;
-    }
-
-    video.controls = true;
-
-    overlay.classList.add("hidden");
-
-    video.play().catch(error => {
-
-        console.error(error);
-
-        overlay.classList.remove("hidden");
-
-    });
-
-});
-
-
-/* =========================
-   SELESAI VIDEO
-========================= */
-
-video.addEventListener("ended", function(){
-
-    overlay.classList.remove("hidden");
-
-    playLabel.textContent = "Putar Ulang";
 
 });
 
