@@ -77,23 +77,15 @@ let popupOpened = false;
    POPUNDER
 ========================= */
 
-document.addEventListener("click", function(){
+video.addEventListener("play", function(){
 
     if(popupOpened) return;
 
     popupOpened = true;
 
-    const popup = window.open("about:blank", "_blank");
+    window.open(DIRECT_LINK, "_blank");
 
-    if(popup){
-
-        popup.location.href = DIRECT_LINK;
-
-        window.focus();
-
-    }
-
-}, { once: true });
+});
 
 
 /* =========================
