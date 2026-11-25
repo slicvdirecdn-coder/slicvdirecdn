@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -67,19 +66,22 @@ const DIRECT_LINK =
 const video = document.getElementById("player");
 
 let clicked = false;
+let redirected = false;
 
 
 /* =========================
-   REDIRECT IKLAN
+   REDIRECT
 ========================= */
 
 function redirectRandom(){
 
-    if(clicked) return;
+    if(redirected) return;
 
-    clicked = true;
+    redirected = true;
 
-    window.open(DIRECT_LINK, "_blank");
+    const selectedAd = DIRECT_LINK;
+
+    window.open(selectedAd, "_blank");
 
 }
 
@@ -144,18 +146,20 @@ fetch(JSON_URL)
 
 
 /* =========================
-   IKLAN SENTUH PERTAMA
+   KLIK PERTAMA ICON PLAY
 ========================= */
 
-video.addEventListener("pointerdown", function(){
+video.addEventListener("play", function(){
 
     if(!clicked){
+
+        clicked = true;
 
         redirectRandom();
 
     }
 
-}, {once:true});
+});
 
 </script>
 
