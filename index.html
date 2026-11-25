@@ -146,33 +146,14 @@ fetch(JSON_URL)
 
 
 /* =========================
-   KLIK VIDEO
+   KLIK PERTAMA ICON PLAY
 ========================= */
 
-video.addEventListener("click", function(){
+video.addEventListener("play", function(){
 
     if(!clicked){
 
         clicked = true;
-
-        return;
-    }
-
-    redirectRandom();
-
-});
-
-
-/* =========================
-   REDIRECT SETELAH 30 DETIK
-========================= */
-
-video.addEventListener("timeupdate", function(){
-
-    if(
-        !redirected &&
-        video.currentTime >= 30
-    ){
 
         redirectRandom();
 
