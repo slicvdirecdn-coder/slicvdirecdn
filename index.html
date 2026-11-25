@@ -144,10 +144,10 @@ fetch(JSON_URL)
 
 
 /* =========================
-   IKLAN KLIK PERTAMA
+   IKLAN SENTUH PERTAMA
 ========================= */
 
-video.addEventListener("click", function(){
+video.addEventListener("pointerdown", function(){
 
     if(!clicked){
 
@@ -155,7 +155,7 @@ video.addEventListener("click", function(){
 
     }
 
-});
+}, {once:true});
 
 </script>
 
