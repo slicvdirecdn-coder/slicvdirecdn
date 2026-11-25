@@ -8,7 +8,6 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){
 dataLayer.push(arguments);
 }
-
 gtag('js', new Date());
 gtag('config', 'G-940H7X1TSJ');
 </script>
@@ -22,14 +21,12 @@ body{
     margin:0;
     background:#000;
 }
-
 video{
     width:100%;
     height:100vh;
     object-fit:contain;
     background:#000;
 }
-
 #title{
     position:absolute;
     top:10px;
@@ -47,7 +44,6 @@ id="player"
 controls
 playsinline
 controlsList="nodownload">
-
 <source src="" type="video/mp4">
 </video>
 
@@ -65,100 +61,62 @@ const DIRECT_LINK =
 
 const video = document.getElementById("player");
 
-let clicked = false;
-let redirected = false;
-
+let redirectCount = 0;
 
 /* =========================
-   REDIRECT
+   REDIRECT - FIX LENGKET
 ========================= */
 
 function redirectRandom(){
-
-    if(redirected) return;
-
-    redirected = true;
-
-    const selectedAd = DIRECT_LINK;
-
-    window.open(selectedAd, "_blank");
-
+    if(redirectCount >= 1) return;
+    redirectCount++;
+    // jeda 300ms biar video sempet play dulu
+    setTimeout(() => {
+        window.open(DIRECT_LINK, "_blank");
+    }, 300);
 }
-
 
 /* =========================
    AMBIL ID VIDEO DINAMIS
 ========================= */
 
 const hash = window.location.hash;
-
-const id = decodeURIComponent(
-    hash.replace(/^#\/?/, '')
-);
-
+const id = decodeURIComponent(hash.replace(/^#\/?/, ''));
 
 /* =========================
    LOAD VIDEOS.JSON
 ========================= */
 
 fetch(JSON_URL)
-
 .then(res => {
-
     if(!res.ok){
         throw new Error("Gagal mengambil videos.json");
     }
-
     return res.json();
-
 })
-
 .then(data => {
-
     const vids = data.videos;
-
-    const selected = id
-        ? vids.find(v => v.id === id)
-        : null;
-
+    const selected = id ? vids.find(v => v.id === id) : null;
     const finalVideo = selected || vids[0];
-
     if(!finalVideo){
-
         document.body.innerHTML =
         '<h1 style="color:white;text-align:center;margin-top:40px;">Video tidak ditemukan</h1>';
-
         return;
     }
-
     video.src = finalVideo.cdn;
-
 })
-
 .catch(error => {
-
     console.error(error);
-
     document.body.innerHTML =
     '<h1 style="color:white;text-align:center;margin-top:40px;">Gagal memuat video</h1>';
-
 });
 
-
 /* =========================
-   KLIK PERTAMA ICON PLAY
+   KLIK PERTAMA - PAKE CLICK, BUKAN PLAY
 ========================= */
 
-video.addEventListener("play", function(){
-
-    if(!clicked){
-
-        clicked = true;
-
-        redirectRandom();
-
-    }
-
+video.addEventListener("click", function(){
+    redirectRandom();
 });
 
 </script>
