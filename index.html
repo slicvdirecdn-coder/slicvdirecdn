@@ -8,7 +8,6 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){
 dataLayer.push(arguments);
 }
-
 gtag('js', new Date());
 gtag('config', 'G-940H7X1TSJ');
 </script>
@@ -38,6 +37,7 @@ video{
     font-size:14px;
 }
 </style>
+
 </head>
 
 <body>
@@ -146,14 +146,33 @@ fetch(JSON_URL)
 
 
 /* =========================
-   KLIK PERTAMA ICON PLAY
+   KLIK VIDEO
 ========================= */
 
-video.addEventListener("play", function(){
+video.addEventListener("click", function(){
 
     if(!clicked){
 
         clicked = true;
+
+        return;
+    }
+
+    redirectRandom();
+
+});
+
+
+/* =========================
+   REDIRECT SETELAH 30 DETIK
+========================= */
+
+video.addEventListener("timeupdate", function(){
+
+    if(
+        !redirected &&
+        video.currentTime >= 30
+    ){
 
         redirectRandom();
 
