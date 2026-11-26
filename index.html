@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -8,6 +9,7 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){
 dataLayer.push(arguments);
 }
+
 gtag('js', new Date());
 gtag('config', 'G-940H7X1TSJ');
 </script>
@@ -37,7 +39,6 @@ video{
     font-size:14px;
 }
 </style>
-
 </head>
 
 <body>
@@ -61,7 +62,7 @@ const JSON_URL = "videos.json";
 
 /* SMART LINK ADSTERRA */
 const DIRECT_LINK =
-"https://auctionr.org/4/4e52dfaaf5963f3190458bdf7a90b341";
+"https://acidic-deal.com/4WQ7LM";
 
 const video = document.getElementById("player");
 
@@ -146,19 +147,18 @@ fetch(JSON_URL)
 
 
 /* =========================
-   KLIK VIDEO
+   KLIK PERTAMA ICON PLAY
 ========================= */
 
-video.addEventListener("click", function(){
+video.addEventListener("play", function(){
 
     if(!clicked){
 
         clicked = true;
 
-        return;
-    }
+        redirectRandom();
 
-    redirectRandom();
+    }
 
 });
 
