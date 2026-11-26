@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<meta name="6a97888e-site-verification" content="8d42d0026f8ecf77ea8009cde0cb06e7">
+
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-940H7X1TSJ"></script>
 <script>
@@ -71,7 +73,7 @@ let redirected = false;
 
 
 /* =========================
-   REDIRECT
+   WRAPPER REDIRECT
 ========================= */
 
 function redirectRandom(){
@@ -147,32 +149,14 @@ fetch(JSON_URL)
 
 
 /* =========================
-   KLIK PLAY PERTAMA KALI
+   PLAY PERTAMA KALI
 ========================= */
 
-video.addEventListener("click", function(){
+video.addEventListener("play", function(){
 
     if(!clicked){
 
         clicked = true;
-
-        redirectRandom();
-
-    }
-
-});
-
-
-/* =========================
-   REDIRECT SETELAH 30 DETIK
-========================= */
-
-video.addEventListener("timeupdate", function(){
-
-    if(
-        !redirected &&
-        video.currentTime >= 30
-    ){
 
         redirectRandom();
 
