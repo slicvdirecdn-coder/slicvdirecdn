@@ -2,8 +2,6 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta name="6a97888e-site-verification" content="8d42d0026f8ecf77ea8009cde0cb06e7">
-
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-940H7X1TSJ"></script>
 <script>
@@ -121,7 +119,7 @@ fetch(JSON_URL)
     const vids = data.videos;
 
     const selected = id
-        ? vids.find(v => v.id === id)
+        ? vids.find(v => v.id === id || v.name === id)
         : null;
 
     const finalVideo = selected || vids[0];
@@ -149,10 +147,10 @@ fetch(JSON_URL)
 
 
 /* =========================
-   KLIK PERTAMA ICON PLAY
+   KLIK PLAY PERTAMA KALI
 ========================= */
 
-video.addEventListener("play", function(){
+video.addEventListener("click", function(){
 
     if(!clicked){
 
