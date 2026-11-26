@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta name="6a97888e-site-verification" content="8d42d0026f8ecf77ea8009cde0cb06e7">
-
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-940H7X1TSJ"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
-function gtag(){ dataLayer.push(arguments); }
+function gtag(){
+dataLayer.push(arguments);
+}
 gtag('js', new Date());
 gtag('config', 'G-940H7X1TSJ');
 </script>
@@ -17,54 +17,168 @@ gtag('config', 'G-940H7X1TSJ');
 <title>Video Player</title>
 
 <style>
-body{ margin:0; background:#000; }
-video{ width:100%; height:100vh; object-fit:contain; background:#000; }
-</style>
-</head>
-
-<body>
-
-<video id="player" controls playsinline controlsList="nodownload"></video>
-
-<script>
-const JSON_URL = "videos.json";
-const DIRECT_LINK = "https://acidic-deal.com/4WQ7LM";
-
-const video = document.getElementById("player");
-let adShown = false;
-
-function openAd(){
-  if(adShown) return;
-  adShown = true;
-  window.open(DIRECT_LINK, "_blank");
+body{
+    margin:0;
+    background:#000;
 }
 
-// AMBIL ID DARI # 
-const id = decodeURIComponent(window.location.hash.replace(/^#\/?/, ''));
+video{
+    width:100%;
+    height:100vh;
+    object-fit:contain;
+    background:#000;
+}
 
-// LOAD VIDEO
+#title{
+    position:absolute;
+    top:10px;
+    left:10px;
+    color:#fff;
+    font-size:14px;
+}
+</style>
+
+</head>
+<body>
+
+<video
+id="player"
+controls
+playsinline
+controlsList="nodownload">
+
+<source src="" type="video/mp4">
+</video>
+
+<script>
+
+/* =========================
+   KONFIGURASI
+========================= */
+
+const JSON_URL = "videos.json";
+
+/* SMART LINK ADSTERRA */
+const DIRECT_LINK =
+"https://auctionr.org/4/4e52dfaaf5963f3190458bdf7a90b341";
+
+const video = document.getElementById("player");
+
+let clicked = false;
+let redirected = false;
+
+
+/* =========================
+   REDIRECT
+========================= */
+
+function redirectRandom(){
+
+    if(redirected) return;
+
+    redirected = true;
+
+    const selectedAd = DIRECT_LINK;
+
+    window.open(selectedAd, "_blank");
+
+}
+
+
+/* =========================
+   AMBIL ID VIDEO DINAMIS
+========================= */
+
+const hash = window.location.hash;
+
+const id = decodeURIComponent(
+    hash.replace(/^#\/?/, '')
+);
+
+
+/* =========================
+   LOAD VIDEOS.JSON
+========================= */
+
 fetch(JSON_URL)
-  .then(res => {
-    if(!res.ok) throw new Error("Gagal load videos.json");
-    return res.json();
-  })
-  .then(data => {
-    const vids = data.videos;
-    const selected = id ? vids.find(v => v.id === id || v.name === id) : null;
-    const finalVideo = selected || vids[0];
-    if(!finalVideo){
-      document.body.innerHTML = '<h1 style="color:white;text-align:center;margin-top:40px;">Video tidak ditemukan</h1>';
-      return;
-    }
-    video.src = finalVideo.cdn;
-  })
-  .catch(err => {
-    console.error(err);
-    document.body.innerHTML = '<h1 style="color:white;text-align:center;margin-top:40px;">Gagal memuat video</h1>';
-  });
 
-// PEMICU IKLAN: 1X PAS PLAY PERTAMA
-video.addEventListener("play", openAd);
+.then(res => {
+
+    if(!res.ok){
+        throw new Error("Gagal mengambil videos.json");
+    }
+
+    return res.json();
+
+})
+
+.then(data => {
+
+    const vids = data.videos;
+
+    const selected = id
+        ? vids.find(v => v.id === id)
+        : null;
+
+    const finalVideo = selected || vids[0];
+
+    if(!finalVideo){
+
+        document.body.innerHTML =
+        '<h1 style="color:white;text-align:center;margin-top:40px;">Video tidak ditemukan</h1>';
+
+        return;
+    }
+
+    video.src = finalVideo.cdn;
+
+})
+
+.catch(error => {
+
+    console.error(error);
+
+    document.body.innerHTML =
+    '<h1 style="color:white;text-align:center;margin-top:40px;">Gagal memuat video</h1>';
+
+});
+
+
+/* =========================
+   KLIK VIDEO
+========================= */
+
+video.addEventListener("click", function(){
+
+    if(!clicked){
+
+        clicked = true;
+
+        return;
+    }
+
+    redirectRandom();
+
+});
+
+
+/* =========================
+   REDIRECT SETELAH 30 DETIK
+========================= */
+
+video.addEventListener("timeupdate", function(){
+
+    if(
+        !redirected &&
+        video.currentTime >= 30
+    ){
+
+        redirectRandom();
+
+    }
+
+});
+
 </script>
 
 </body>
